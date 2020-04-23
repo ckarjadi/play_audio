@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
-
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.LeftPanelController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<VBox prefHeight="875.0" prefWidth="300.0" spacing="5.0"
+      xmlns="http://javafx.com/javafx/8.0.121"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.LeftPanelController">
+    <GridPane vgap="1.0" BorderPane.alignment="CENTER">
+<!--        <Text text="METADATA" GridPane.columnIndex="0" GridPane.columnSpan="2"
+              GridPane.halignment="CENTER" GridPane.rowIndex="0" />-->
+        <Label text="Filename:" GridPane.columnIndex="0" GridPane.rowIndex="1" fx:id="filenameLabel">
+            <padding>
+                <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+            </padding>
+        </Label>
+        <Label text="Length:" GridPane.columnIndex="0" GridPane.rowIndex="2" fx:id="lengthLabel">
+            <padding>
+                <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+            </padding>
+        </Label>
+    </GridPane>
+</VBox>

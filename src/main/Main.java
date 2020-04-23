@@ -1,8 +1,10 @@
 package main;
 
+import controller.CenterController;
+import controller.LeftPanelController;
+import controller.MenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -19,11 +21,18 @@ public class Main extends Application {
         FXMLLoader rightPanelLoader = new FXMLLoader(getClass().getResource("/fxml/rightPanel.fxml"));
         root.setRight(rightPanelLoader.load());
 
-        FXMLLoader canvasLoader = new FXMLLoader(getClass().getResource("/fxml/canvas.fxml"));
-        root.setCenter(canvasLoader.load());
+        FXMLLoader centerLoader = new FXMLLoader(getClass().getResource("/fxml/center.fxml"));
+        root.setCenter(centerLoader.load());
 
         FXMLLoader leftPanelLoader = new FXMLLoader(getClass().getResource("/fxml/leftPanel.fxml"));
         root.setLeft(leftPanelLoader.load());
+
+        MenuController menuController = menuLoader.getController();
+        CenterController centerController = centerLoader.getController();
+        LeftPanelController leftPanelController = leftPanelLoader.getController();
+
+        centerController.initializeController(leftPanelController);
+        menuController.initializeController(centerController, leftPanelController);
 
         Scene scene = new Scene(root, 1200, 850, Color.WHITE);
         primaryStage.setResizable(false);

@@ -2,10 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/controller/CenterController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/fxml/center.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/AudioDuration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/util/SetLabelText.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/play_audio/controller/CanvasController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/play_audio/controller/LeftPanelController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/play_audio/controller/LeftPanelController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/play_audio/controller/MenuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/play_audio/controller/MenuController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/play_audio/fxml/canvas.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/play_audio/fxml/leftPanel.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/play_audio/fxml/leftPanel.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/play_audio/main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/play_audio/main/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/CanvasController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/LeftPanelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/LeftPanelController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/MenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fxml/menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/fxml/menu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fxml/canvas.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fxml/leftPanel.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/fxml/leftPanel.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,16 +97,16 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="OverrideImplement.combined" value="false" />
-    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
-    <property name="MemberChooser.sorted" value="false" />
-    <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="OverrideImplement.combined" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="dynamic.classpath" value="false" />
+    <property name="recentsLimit" value="5" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -210,22 +223,38 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1220" y="278" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1587656787171" />
-    <state width="914" height="264" key="GridCell.Tab.0.bottom" timestamp="1587660028366">
+    <state width="1048" height="308" key="GridCell.Tab.0.bottom" timestamp="1587673618256">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="264" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1587660028366" />
-    <state width="914" height="264" key="GridCell.Tab.0.center" timestamp="1587660028366">
+    <state width="1048" height="308" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1587673618256" />
+    <state width="1048" height="308" key="GridCell.Tab.0.center" timestamp="1587673618255">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="264" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1587660028366" />
-    <state width="914" height="264" key="GridCell.Tab.0.left" timestamp="1587660028366">
+    <state width="1048" height="308" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1587673618255" />
+    <state width="1048" height="308" key="GridCell.Tab.0.left" timestamp="1587673618255">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="264" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1587660028366" />
-    <state width="914" height="264" key="GridCell.Tab.0.right" timestamp="1587660028366">
+    <state width="1048" height="308" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1587673618255" />
+    <state width="1048" height="308" key="GridCell.Tab.0.right" timestamp="1587673618255">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="264" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1587660028366" />
+    <state width="1048" height="308" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1587673618255" />
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1587669122298">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1587669122298" />
+    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1587669122298">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1587669122298" />
+    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1587669122298">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1587669122298" />
+    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1587669122298">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1587669122298" />
     <state x="661" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1587656557098">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
