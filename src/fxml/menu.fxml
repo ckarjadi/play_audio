@@ -1,8 +1,17 @@
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<GridPane fx:controller="controller.MenuController"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-</GridPane>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<AnchorPane fx:id="anchor" xmlns="http://javafx.com/javafx/8.0.121"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.MenuController">
+    <MenuBar prefWidth="1200.0">
+        <Menu mnemonicParsing="false" text="File">
+            <MenuItem fx:id="openMI" mnemonicParsing="false"
+                      onAction="#openAction"
+                      text="Open"
+                      accelerator="Shortcut+O"/>
+        </Menu>
+    </MenuBar>
+</AnchorPane>
