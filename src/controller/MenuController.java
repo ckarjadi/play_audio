@@ -48,7 +48,6 @@ public class MenuController {
         } catch (IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
-        Media media = new Media(selectedFile.toURI().toString());
-        centerController.setMediaView(new MediaPlayer(media));
+        centerController.updateAudioPlayback(selectedFile);
     }
 }

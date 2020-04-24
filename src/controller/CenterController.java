@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -38,24 +39,9 @@ public class CenterController {
     private Slider timeSlider;
     private Label playTime;
     private Slider volumeSlider;
-
     private LeftPanelController leftPanelController;
-    public void initializeController(LeftPanelController left) {
-        leftPanelController = left;
-        File defaultFile =  new File("file/wav/PinkPanther60.wav");
-        SetLabelText.setFilenameLabel(leftPanelController.filenameLabel, defaultFile.getName());
-        try {
-            SetLabelText.setLengthLabel(leftPanelController.lengthLabel,
-                    AudioDuration.getDurationString(defaultFile));
-        } catch (IOException | UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        }
 
-        Media defaultMedia = new Media(defaultFile.toURI().toString());
-        mp = new MediaPlayer(defaultMedia);
-        mediaView = new MediaView(mp);
-        mediaTimeline.setAlignment(Pos.CENTER);
-        mediaTimeline.setPadding(new Insets(5, 10, 5, 10));
+    private Button createPlayButton(MediaPlayer mp) {
         final Button playButton = new Button(">");
         playButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -83,6 +69,10 @@ public class CenterController {
                 }
             }
         });
+        return playButton;
+    }
+
+    private void setMediaPlayerBehavior(MediaPlayer mp, Button playButton) {
         mp.currentTimeProperty().addListener(ov -> updateValues());
 
         mp.setOnPlaying(() -> {
@@ -112,6 +102,31 @@ public class CenterController {
                 atEndOfMedia = true;
             }
         });
+
+    }
+
+    private void initMediaTimeline() {
+        mediaTimeline.setAlignment(Pos.CENTER);
+        mediaTimeline.setPadding(new Insets(5, 10, 5, 10));
+    }
+    private void updateFilenameLength(File file) {
+        SetLabelText.setFilenameLabel(leftPanelController.filenameLabel, file.getName());
+        try {
+            SetLabelText.setLengthLabel(leftPanelController.lengthLabel,
+                    AudioDuration.getDurationString(file));
+        } catch (IOException | UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createMedia(File file) {
+        Media media = new Media(file.toURI().toString());
+        mp = new MediaPlayer(media);
+        mediaView = new MediaView(mp);
+
+        Button playButton = createPlayButton(mp);
+        setMediaPlayerBehavior(mp, playButton);
+
         mediaTimeline.getChildren().add(playButton);
 
         Label spacer = new Label("   ");
@@ -124,6 +139,12 @@ public class CenterController {
         HBox.setHgrow(timeSlider, Priority.ALWAYS);
         timeSlider.setMinWidth(50);
         timeSlider.setMaxWidth(Double.MAX_VALUE);
+        timeSlider.valueProperty().addListener(ov -> {
+            if (timeSlider.isValueChanging()) {
+                // multiply duration by percentage calculated by slider position
+                mp.seek(duration.multiply(timeSlider.getValue() / 100.0));
+            }
+        });
         mediaTimeline.getChildren().add(timeSlider);
 
         playTime = new Label();
@@ -138,12 +159,26 @@ public class CenterController {
         volumeSlider.setPrefWidth(70);
         volumeSlider.setMaxWidth(Region.USE_PREF_SIZE);
         volumeSlider.setMinWidth(30);
+        volumeSlider.valueProperty().addListener(ov -> {
+            if (volumeSlider.isValueChanging()) {
+                mp.setVolume(volumeSlider.getValue() / 100.0);
+            }
+        });
         mediaTimeline.getChildren().add(volumeSlider);
     }
-    public void setMediaView(MediaPlayer mediaPlayer) {
-        mp = mediaPlayer;
-        mediaView = new MediaView(mediaPlayer);
+
+    public void updateAudioPlayback(File file) {
+        mediaTimeline.getChildren().clear();
+        updateFilenameLength(file);
+        createMedia(file);
     }
+    public void initializeController(LeftPanelController left) {
+        leftPanelController = left;
+        File defaultFile = new File("file/wav/PinkPanther60.wav");
+        initMediaTimeline();
+        updateAudioPlayback(defaultFile);
+    }
+
 
     @FXML
     private void initialize() {
@@ -151,5 +186,60 @@ public class CenterController {
     }
 
     private void updateValues() {
+        if (playTime != null && timeSlider != null && volumeSlider != null) {
+            Platform.runLater(() -> {
+                Duration currentTime = mp.getCurrentTime();
+                playTime.setText(formatTime(currentTime, duration));
+                timeSlider.setDisable(duration.isUnknown());
+                if (!timeSlider.isDisabled()
+                        && duration.greaterThan(Duration.ZERO)
+                        && !timeSlider.isValueChanging()) {
+                    timeSlider.setValue(currentTime.divide(duration).toMillis()
+                            * 100.0);
+                }
+                if (!volumeSlider.isValueChanging()) {
+                    volumeSlider.setValue((int)Math.round(mp.getVolume()
+                            * 100));
+                }
+            });
+        }
+    }
+    private static String formatTime(Duration elapsed, Duration duration) {
+        int intElapsed = (int)Math.floor(elapsed.toSeconds());
+        int elapsedHours = intElapsed / (60 * 60);
+        if (elapsedHours > 0) {
+            intElapsed -= elapsedHours * 60 * 60;
+        }
+        int elapsedMinutes = intElapsed / 60;
+        int elapsedSeconds = intElapsed - elapsedHours * 60 * 60
+                - elapsedMinutes * 60;
+
+        if (duration.greaterThan(Duration.ZERO)) {
+            int intDuration = (int)Math.floor(duration.toSeconds());
+            int durationHours = intDuration / (60 * 60);
+            if (durationHours > 0) {
+                intDuration -= durationHours * 60 * 60;
+            }
+            int durationMinutes = intDuration / 60;
+            int durationSeconds = intDuration - durationHours * 60 * 60 -
+                    durationMinutes * 60;
+            if (durationHours > 0) {
+                return String.format("%d:%02d:%02d/%d:%02d:%02d",
+                        elapsedHours, elapsedMinutes, elapsedSeconds,
+                        durationHours, durationMinutes, durationSeconds);
+            } else {
+                return String.format("%02d:%02d/%02d:%02d",
+                        elapsedMinutes, elapsedSeconds,durationMinutes,
+                        durationSeconds);
+            }
+        } else {
+            if (elapsedHours > 0) {
+                return String.format("%d:%02d:%02d", elapsedHours,
+                        elapsedMinutes, elapsedSeconds);
+            } else {
+                return String.format("%02d:%02d",elapsedMinutes,
+                        elapsedSeconds);
+            }
+        }
     }
 }
