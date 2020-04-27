@@ -1,5 +1,3 @@
-package main;
-
 import controller.CenterController;
 import controller.LeftPanelController;
 import controller.MenuController;
