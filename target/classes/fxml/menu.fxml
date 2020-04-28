@@ -8,10 +8,14 @@
             fx:controller="controller.MenuController">
     <MenuBar prefWidth="1200.0">
         <Menu mnemonicParsing="false" text="File">
-            <MenuItem fx:id="openMI" mnemonicParsing="false"
-                      onAction="#openAction"
-                      text="Open"
+            <MenuItem fx:id="openAudioMI" mnemonicParsing="false"
+                      onAction="#openAudioAction"
+                      text="Open Audio"
                       accelerator="Shortcut+O"/>
+            <MenuItem fx:id="openSegmentMI" mnemonicParsing="false"
+                      onAction="#openSegmentAction"
+                      text="Open Segment CSV"
+                      />
         </Menu>
     </MenuBar>
 </AnchorPane>

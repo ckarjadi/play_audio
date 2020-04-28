@@ -2,11 +2,7 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import util.AudioDuration;
@@ -26,7 +22,7 @@ public class MenuController {
         leftPanelController = leftController;
         centerController = cenController;
     }
-    public void openAction(ActionEvent actionEvent) {
+    public void openAudioAction(ActionEvent actionEvent) {
         Window stage = anchor.getScene().getWindow();
         if (workingDir == null) {
             workingDir = new File("." + File.separator + "file");
@@ -42,12 +38,17 @@ public class MenuController {
         fileChooser.setInitialDirectory(workingDir);
         fileChooser.setTitle("Open Audio File");
         File selectedFile = fileChooser.showOpenDialog(stage);
-        leftPanelController.filenameLabel.setText("Filename: " + selectedFile.getName());
-        try {
-            leftPanelController.lengthLabel.setText("Length: " + AudioDuration.getDurationString(selectedFile));
-        } catch (IOException | UnsupportedAudioFileException e) {
-            e.printStackTrace();
+        if (selectedFile != null) {
+            leftPanelController.filenameLabel.setText("Filename: " + selectedFile.getName());
+            try {
+                leftPanelController.lengthLabel.setText("Length: " + AudioDuration.getDurationString(selectedFile));
+            } catch (IOException | UnsupportedAudioFileException e) {
+                e.printStackTrace();
+            }
+            centerController.updateAudioPlayback(selectedFile);
         }
-        centerController.updateAudioPlayback(selectedFile);
+    }
+    
+    public void openSegmentAction(ActionEvent actionEvent) {
     }
 }
