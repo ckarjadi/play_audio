@@ -8,9 +8,11 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 public class CSVReader {
-    public static void readSegmentCSV(String csvPath) throws IOException {
+    public static HashMap<String, String> readSegmentCSV(String csvPath) throws IOException {
+        HashMap<String, String> hm = new HashMap<>();
         Reader reader = Files.newBufferedReader(Paths.get(csvPath));
         CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
                 .withFirstRecordAsHeader()
@@ -18,10 +20,11 @@ public class CSVReader {
                 .withTrim());
 
         for (CSVRecord cr: csvParser) {
-           System.out.println(cr.get("speaker_label"));
-           System.out.println(cr.get("start_timestamp"));
-           System.out.println(cr.get("end_timestamp"));
-           System.out.println(cr.get("color"));
+           hm.put("speaker", cr.get("speaker"));
+           hm.put("start", cr.get("start"));
+           hm.put("end", cr.get("end"));
+           hm.put("color", cr.get("color"));
         }
+        return hm;
     }
 }

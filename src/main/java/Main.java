@@ -39,6 +39,7 @@ public class Main extends Application {
         leftPanelController.initializeModel(audioModel);
         centerController.initializeModel(audioModel);
         menuController.initializeModel(audioModel);
+        rightPanelController.initializeModel(audioModel);
 
 
         Scene scene = new Scene(root, 1200, 850, Color.WHITE);
