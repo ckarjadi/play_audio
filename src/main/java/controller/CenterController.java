@@ -18,8 +18,9 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
+import model.AudioModel;
 import util.AudioDuration;
-import util.SetLabelText;
+import util.GetLabelText;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
@@ -39,8 +40,16 @@ public class CenterController {
     private Slider timeSlider;
     private Label playTime;
     private Slider volumeSlider;
+    private AudioModel audioModel;
     private LeftPanelController leftPanelController;
 
+    public void initializeModel(AudioModel model) {
+        this.audioModel = model;
+        this.leftPanelController = audioModel.leftPanelController;
+        File defaultFile = new File("file/wav/PinkPanther60.wav");
+        initMediaTimeline();
+        updateAudioPlayback(defaultFile);
+    }
     private Button createPlayButton(MediaPlayer mp) {
         final Button playButton = new Button(">");
         playButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -110,10 +119,9 @@ public class CenterController {
         mediaTimeline.setPadding(new Insets(5, 10, 5, 10));
     }
     private void updateFilenameLength(File file) {
-        SetLabelText.setFilenameLabel(leftPanelController.filenameLabel, file.getName());
+        leftPanelController.setFilenameLabelText(GetLabelText.getFilenameLabel(file.getName()));
         try {
-            SetLabelText.setLengthLabel(leftPanelController.lengthLabel,
-                    AudioDuration.getDurationString(file));
+            leftPanelController.setLengthLabelText(GetLabelText.getLengthLabel(AudioDuration.getDurationString(file)));
         } catch (IOException | UnsupportedAudioFileException e) {
             e.printStackTrace();
         }
@@ -172,13 +180,6 @@ public class CenterController {
         updateFilenameLength(file);
         createMedia(file);
     }
-    public void initializeController(LeftPanelController left) {
-        leftPanelController = left;
-        File defaultFile = new File("file/wav/PinkPanther60.wav");
-        initMediaTimeline();
-        updateAudioPlayback(defaultFile);
-    }
-
 
     @FXML
     private void initialize() {

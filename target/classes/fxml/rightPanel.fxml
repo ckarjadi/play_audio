@@ -8,4 +8,7 @@
       BorderPane.alignment="CENTER_RIGHT" xmlns="http://javafx.com/javafx/8.0.121"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="controller.RightPanelController">
+    <ListView fx:id="speakerListView" prefHeight="200.0" prefWidth="100.0"/>
+    <ListView fx:id="startListView" prefHeight="200.0" prefWidth="100.0"/>
+    <ListView fx:id="endListView" prefHeight="200.0" prefWidth="100.0"/>
 </HBox>

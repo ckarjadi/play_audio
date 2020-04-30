@@ -21,7 +21,7 @@ public class CSVReader {
            System.out.println(cr.get("speaker_label"));
            System.out.println(cr.get("start_timestamp"));
            System.out.println(cr.get("end_timestamp"));
-           System.out.println("color");
+           System.out.println(cr.get("color"));
         }
     }
 }

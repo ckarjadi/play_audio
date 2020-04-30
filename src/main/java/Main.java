@@ -1,12 +1,14 @@
 import controller.CenterController;
 import controller.LeftPanelController;
 import controller.MenuController;
+import controller.RightPanelController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.AudioModel;
 
 public class Main extends Application {
 
@@ -26,11 +28,18 @@ public class Main extends Application {
         root.setLeft(leftPanelLoader.load());
 
         MenuController menuController = menuLoader.getController();
-        CenterController centerController = centerLoader.getController();
         LeftPanelController leftPanelController = leftPanelLoader.getController();
+        CenterController centerController = centerLoader.getController();
+        RightPanelController rightPanelController = rightPanelLoader.getController();
 
-        centerController.initializeController(leftPanelController);
-        menuController.initializeController(centerController, leftPanelController);
+
+        AudioModel audioModel = new AudioModel(menuController, leftPanelController, centerController,
+                rightPanelController);
+
+        leftPanelController.initializeModel(audioModel);
+        centerController.initializeModel(audioModel);
+        menuController.initializeModel(audioModel);
+
 
         Scene scene = new Scene(root, 1200, 850, Color.WHITE);
         primaryStage.setResizable(false);
