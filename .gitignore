@@ -24,3 +24,7 @@ hs_err_pid*
 
 # IDE files
 *.iml
+
+# dvr files
+Mock Test 4_SampleDVRandbattery_DVR_deidentified.wav
+Sample_HV_Clip.wav

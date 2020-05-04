@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -27,9 +28,11 @@ import java.io.File;
 import java.io.IOException;
 
 public class CenterController {
+
     @FXML
     private HBox mediaTimeline;
-    public VBox centerVBox;
+    @FXML
+    private VBox centerVBox;
 
     private MediaPlayer mp;
     private MediaView mediaView;
@@ -50,6 +53,90 @@ public class CenterController {
         initMediaTimeline();
         updateAudioPlayback(defaultFile);
     }
+    public Slider getTimeSlider() {
+        return timeSlider;
+    }
+
+    public MediaPlayer getMp() {
+        return mp;
+    }
+
+    private void initMediaTimeline() {
+        mediaTimeline.setAlignment(Pos.CENTER);
+        mediaTimeline.setPadding(new Insets(5, 10, 5, 10));
+    }
+
+    public void updateAudioPlayback(File file) {
+        mediaTimeline.getChildren().clear();
+        updateFilenameLength(file);
+        createMedia(file);
+    }
+
+    private void updateFilenameLength(File file) {
+        audioModel.setCurrentAudioFile(file);
+        leftPanelController.setFilenameLabelText(GetLabelText.getFilenameLabel(file.getName()));
+        float duration = Float.MIN_VALUE;
+        try {
+            duration = AudioDuration.getDurationSeconds(file);
+            String durationString = AudioDuration.getDurationString(duration);
+            leftPanelController.setLengthLabelText(GetLabelText.getLengthLabel(durationString));
+        } catch (IOException | UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        }
+        audioModel.setAudioDuration(duration);
+    }
+
+    private void createMedia(File file) {
+        Media media = new Media(file.toURI().toString());
+        mp = new MediaPlayer(media);
+        mediaView = new MediaView(mp);
+
+        Button playButton = createPlayButton(mp);
+        setMediaPlayerBehavior(mp, playButton);
+
+        mediaTimeline.getChildren().add(playButton);
+
+        Label spacer = new Label("   ");
+        mediaTimeline.getChildren().add(spacer);
+
+        Label timeLabel = new Label("Time: ");
+        mediaTimeline.getChildren().add(timeLabel);
+
+        timeSlider = new Slider();
+        HBox.setHgrow(timeSlider, Priority.ALWAYS);
+        timeSlider.setMinWidth(50);
+        timeSlider.setMaxWidth(Double.MAX_VALUE);
+        timeSlider.valueProperty().addListener(ov -> {
+            if (timeSlider.isValueChanging()) {
+/*                System.out.println("time slider value: " + timeSlider.getValue());*/
+                // multiply duration by percentage calculated by slider position
+                mp.seek(duration.multiply(timeSlider.getValue() / 100.0));
+                System.out.println("timeSlider value is now: " + timeSlider.getValue());
+                //timeSlider.setValueChanging(false);
+            }
+        });
+        mediaTimeline.getChildren().add(timeSlider);
+
+        playTime = new Label();
+        playTime.setPrefWidth(130);
+        playTime.setMinWidth(50);
+        mediaTimeline.getChildren().add(playTime);
+
+        Label volumeLabel = new Label("Vol: ");
+        mediaTimeline.getChildren().add(volumeLabel);
+
+        volumeSlider = new Slider();
+        volumeSlider.setPrefWidth(70);
+        volumeSlider.setMaxWidth(Region.USE_PREF_SIZE);
+        volumeSlider.setMinWidth(30);
+        volumeSlider.valueProperty().addListener(ov -> {
+            if (volumeSlider.isValueChanging()) {
+                mp.setVolume(volumeSlider.getValue() / 100.0);
+            }
+        });
+        mediaTimeline.getChildren().add(volumeSlider);
+    }
+
     private Button createPlayButton(MediaPlayer mp) {
         final Button playButton = new Button(">");
         playButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -114,73 +201,6 @@ public class CenterController {
 
     }
 
-    private void initMediaTimeline() {
-        mediaTimeline.setAlignment(Pos.CENTER);
-        mediaTimeline.setPadding(new Insets(5, 10, 5, 10));
-    }
-    private void updateFilenameLength(File file) {
-        leftPanelController.setFilenameLabelText(GetLabelText.getFilenameLabel(file.getName()));
-        try {
-            leftPanelController.setLengthLabelText(GetLabelText.getLengthLabel(AudioDuration.getDurationString(file)));
-        } catch (IOException | UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void createMedia(File file) {
-        Media media = new Media(file.toURI().toString());
-        mp = new MediaPlayer(media);
-        mediaView = new MediaView(mp);
-
-        Button playButton = createPlayButton(mp);
-        setMediaPlayerBehavior(mp, playButton);
-
-        mediaTimeline.getChildren().add(playButton);
-
-        Label spacer = new Label("   ");
-        mediaTimeline.getChildren().add(spacer);
-
-        Label timeLabel = new Label("Time: ");
-        mediaTimeline.getChildren().add(timeLabel);
-
-        timeSlider = new Slider();
-        HBox.setHgrow(timeSlider, Priority.ALWAYS);
-        timeSlider.setMinWidth(50);
-        timeSlider.setMaxWidth(Double.MAX_VALUE);
-        timeSlider.valueProperty().addListener(ov -> {
-            if (timeSlider.isValueChanging()) {
-                // multiply duration by percentage calculated by slider position
-                mp.seek(duration.multiply(timeSlider.getValue() / 100.0));
-            }
-        });
-        mediaTimeline.getChildren().add(timeSlider);
-
-        playTime = new Label();
-        playTime.setPrefWidth(130);
-        playTime.setMinWidth(50);
-        mediaTimeline.getChildren().add(playTime);
-
-        Label volumeLabel = new Label("Vol: ");
-        mediaTimeline.getChildren().add(volumeLabel);
-
-        volumeSlider = new Slider();
-        volumeSlider.setPrefWidth(70);
-        volumeSlider.setMaxWidth(Region.USE_PREF_SIZE);
-        volumeSlider.setMinWidth(30);
-        volumeSlider.valueProperty().addListener(ov -> {
-            if (volumeSlider.isValueChanging()) {
-                mp.setVolume(volumeSlider.getValue() / 100.0);
-            }
-        });
-        mediaTimeline.getChildren().add(volumeSlider);
-    }
-
-    public void updateAudioPlayback(File file) {
-        mediaTimeline.getChildren().clear();
-        updateFilenameLength(file);
-        createMedia(file);
-    }
-
     @FXML
     private void initialize() {
 
@@ -205,6 +225,7 @@ public class CenterController {
             });
         }
     }
+
     private static String formatTime(Duration elapsed, Duration duration) {
         int intElapsed = (int)Math.floor(elapsed.toSeconds());
         int elapsedHours = intElapsed / (60 * 60);
@@ -243,4 +264,5 @@ public class CenterController {
             }
         }
     }
+
 }

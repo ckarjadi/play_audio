@@ -2,6 +2,10 @@
 
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="centerVBox" prefHeight="826.0" prefWidth="692.0" style="-fx-background-color: gainsboro;" BorderPane.alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CenterController">
-    <HBox fx:id="mediaTimeline" prefHeight="288.0" prefWidth="692.0" style="-fx-background-color: khaki;" />
+<VBox fx:id="centerVBox" prefHeight="826.0" prefWidth="692.0" style="-fx-background-color: gainsboro;"
+      BorderPane.alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/10.0.2-internal"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CenterController">
+
+    <HBox fx:id="mediaTimeline" prefHeight="288.0" prefWidth="692.0" style="-fx-background-color: white;"/>
+
 </VBox>

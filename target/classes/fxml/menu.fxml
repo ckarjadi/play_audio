@@ -7,15 +7,19 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.MenuController">
     <MenuBar prefWidth="1200.0">
-        <Menu mnemonicParsing="false" text="File">
+        <Menu mnemonicParsing="false" text="Audio">
             <MenuItem fx:id="openAudioMI" mnemonicParsing="false"
                       onAction="#openAudioAction"
                       text="Open Audio"
                       accelerator="Shortcut+O"/>
-            <MenuItem fx:id="openSegmentMI" mnemonicParsing="false"
-                      onAction="#openSegmentAction"
-                      text="Open Segment CSV"
-                      />
         </Menu>
+            <Menu mnemonicParsing="false" text="Segments">
+                <MenuItem fx:id="openSegmentMI" mnemonicParsing="false"
+                          onAction="#openSegmentAction"
+                          text="Open Segment CSV"/>
+                <MenuItem fx:id="clearSegmentMI" mnemonicParsing="false"
+                          onAction="#clearSegmentsAction"
+                          text="Clear Segments"/>
+            </Menu>
     </MenuBar>
 </AnchorPane>
