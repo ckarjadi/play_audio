@@ -34,8 +34,8 @@ public class RightPanelController {
         endList = audioModel.menuController.getEndList();
         endListView.setItems(endList);
 
-        timeSlider = audioModel.centerController.getTimeSlider();
-        speakerListView.setCellFactory(param -> new SpeakerListCell(this, timeSlider));
+/*        timeSlider = audioModel.centerController.getTimeSlider();*/
+        speakerListView.setCellFactory(param -> new SpeakerListCell(this));
     }
 
     public ObservableList<String> getSpeakerList() {
@@ -50,5 +50,10 @@ public class RightPanelController {
 
     public AudioModel getModel() {
         return model;
+    }
+
+    public Slider getTimeSlider() {
+        timeSlider = model.centerController.getTimeSlider();
+        return timeSlider;
     }
 }

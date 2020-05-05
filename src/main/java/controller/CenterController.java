@@ -108,13 +108,13 @@ public class CenterController {
         timeSlider.setMaxWidth(Double.MAX_VALUE);
         timeSlider.valueProperty().addListener(ov -> {
             if (timeSlider.isValueChanging()) {
-/*                System.out.println("time slider value: " + timeSlider.getValue());*/
-                // multiply duration by percentage calculated by slider position
-                mp.seek(duration.multiply(timeSlider.getValue() / 100.0));
+                double timestamp = timeSlider.getValue() / 100.0;
+                System.out.println("seeking to: " + duration.multiply(timestamp));
+                mp.seek(duration.multiply(timestamp));
                 System.out.println("timeSlider value is now: " + timeSlider.getValue());
-                //timeSlider.setValueChanging(false);
             }
         });
+        System.out.println("timeslider: " + timeSlider);
         mediaTimeline.getChildren().add(timeSlider);
 
         playTime = new Label();
@@ -169,7 +169,10 @@ public class CenterController {
     }
 
     private void setMediaPlayerBehavior(MediaPlayer mp, Button playButton) {
-        mp.currentTimeProperty().addListener(ov -> updateValues());
+        mp.currentTimeProperty().addListener(ov -> {
+            System.out.println("updating time...");
+            updateValues();
+        });
 
         mp.setOnPlaying(() -> {
             if (stopRequested) {
@@ -181,12 +184,12 @@ public class CenterController {
         });
 
         mp.setOnPaused(() -> {
-            //System.out.println("onPaused");
             playButton.setText(">");
         });
 
         mp.setOnReady(() -> {
             duration = mp.getMedia().getDuration();
+            System.out.println("mp duration: " + duration);
             updateValues();
         });
 
@@ -206,7 +209,7 @@ public class CenterController {
 
     }
 
-    private void updateValues() {
+    public void updateValues() {
         if (playTime != null && timeSlider != null && volumeSlider != null) {
             Platform.runLater(() -> {
                 Duration currentTime = mp.getCurrentTime();

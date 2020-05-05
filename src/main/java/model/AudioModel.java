@@ -38,4 +38,5 @@ public class AudioModel {
     public void setAudioDuration(float audioDuration) {
         this.audioDuration = audioDuration;
     }
+
 }
